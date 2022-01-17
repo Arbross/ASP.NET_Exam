@@ -11,7 +11,7 @@
 
 <form method="post" asp-action="Search">
     <div class="form-group pt-1 pb-1">
-        <select asp-items="@Model.Categories" asp-for="@Model.Search.CategoryId" class="form-control" Enabled="false">
+        <select asp-items="@Model.Categories" asp-for="@Model.Search.CategoryId" class="form-control">
             <option selected disabled>---Select Category---</option>
         </select>
     </div>
@@ -36,7 +36,7 @@
         {
             @foreach (Purchase item in @Model.Purchases)
             {
-                <div class="p-2 bg-light mb-1">
+                <div class="p-2 bg-light mb-1 rounded">
                     <p>Name : @item.Name</p>
                     <p>Image : @item.Image</p>
                     <p>Link : @item.Link</p>

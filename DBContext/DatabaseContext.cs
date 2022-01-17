@@ -1,4 +1,5 @@
 ﻿using Exam_ASP_NET.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Exam_ASP_NET
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
@@ -26,5 +27,6 @@ namespace Exam_ASP_NET
 
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public new virtual DbSet<User> Users { get; set; }
     }
 }

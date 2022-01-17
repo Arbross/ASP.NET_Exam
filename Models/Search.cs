@@ -7,7 +7,7 @@ namespace Exam_ASP_NET.Models
 {
     public class Search
     {
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public string Text { get; set; }
     }
 }

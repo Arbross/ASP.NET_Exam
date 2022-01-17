@@ -9,5 +9,8 @@ namespace Exam_ASP_NET
     {
         public const string ImagesPath = "/images/products/";
         public const string CartKey = "ShoppingProducts";
+
+        public const string AdminRole = "Admin";
+        public const string UserRole = "User";
     }
 }
