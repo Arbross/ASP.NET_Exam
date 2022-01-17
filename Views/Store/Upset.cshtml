@@ -1,50 +1,54 @@
-﻿@model Exam_ASP_NET.Models.ViewModel.ViewModel
+﻿@model Exam_ASP_NET.Models.ViewModels.ViewModel;
 @{
     var title = "Create a new Purchase";
 }
 
-<form method="post" asp-action="Upset">
+<form method="post" enctype="multipart/form-data" asp-action="Upset">
     @if (Model.Purchase.Id != 0)
     {
         title = "Edit Purchase";
         <input asp-for="Purchase.Id" hidden>
     }
     <h2 class="mb-3">@title</h2>
-
-    <div class="form-group row">
-        <label asp-for="Purchase.Name" class="col-4"></label>
-        <input asp-for="Purchase.Name" class="form-control col-8">
-        <span asp-validation-for="Purchase.Name" class="offset-4 text-danger"></span>
+    <div>
+        <div>
+            <input asp-for="Purchase.Name" placeholder="Name" class="form-control col-8">
+            <span asp-validation-for="Purchase.Name" class="offset-4 text-danger"></span>
+        </div>
+        <div>
+            <input asp-for="Purchase.Link" placeholder="Link" class="form-control col-8">
+            <span asp-validation-for="Purchase.Link" class="offset-4 text-danger"></span>
+        </div>
+        <div>
+            <select asp-for="Purchase.CategoryId" asp-items="@Model.Categories" class="form-control col-8">
+                <option selected disabled>---Select Category---</option>
+            </select>
+            <span asp-validation-for="Purchase.CategoryId" class="offset-4 text-danger"></span>
+        </div>
+        <div>
+            <input type="file" name="files" class="form-control col-8">
+            <span asp-validation-for="Purchase.Image" class="offset-4 text-danger"></span>
+        </div>
     </div>
-    <div class="form-group row">
-        <label asp-for="Purchase.Link" class="col-4"></label>
-        <input asp-for="Purchase.Link" class="form-control col-8">
-        <span asp-validation-for="Purchase.Link" class="offset-4 text-danger"></span>
-    </div>
-    <div class="form-group row">
-        <label asp-for="Purchase.Image" class="col-4"></label>
-        <input type="file" name="files" class="form-control col-8">
-        <span asp-validation-for="Purchase.Image" class="offset-4 text-danger"></span>
-    </div>
-    <div class="form-group row d-flex justify-content-between">
+    <div class="form-group d-flex justify-content-between">
         <div class="col-6">
             <div>
                 @{
                     if (Model.Purchase.Id != 0)
                     {
                         // Update
-                        <input type="submit" class="btn btn-info w-100" value="Update">
+                        <input type="submit" class="btn btn-info w-75" value="Update">
                     }
                     else
                     {
                         // Create
-                        <input type="submit" class="btn btn-primary w-100" value="Create">
+                        <input type="submit" class="btn btn-primary w-75" value="Create">
                     }
                 }
             </div>
         </div>
         <div class="col-6">
-            <a asp-action="Store" class="btn btn-secondary w-100">Back</a>
+            <a asp-action="Store" class="btn btn-secondary w-75">Back</a>
         </div>
     </div>
 </form>

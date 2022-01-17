@@ -27,6 +27,14 @@ namespace Exam_ASP_NET
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnStr")));
 
+            services.AddHttpContextAccessor();
+            services.AddSession(options => 
+            {
+                options.Cookie.HttpOnly = true;
+                // options.Cookie.Expiration = TimeSpan.FromDays(2);
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -49,6 +57,8 @@ namespace Exam_ASP_NET
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

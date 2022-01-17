@@ -25,5 +25,6 @@ namespace Exam_ASP_NET
         }
 
         public virtual DbSet<Purchase> Purchases { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

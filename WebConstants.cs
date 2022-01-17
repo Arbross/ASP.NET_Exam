@@ -8,5 +8,6 @@ namespace Exam_ASP_NET
     public class WebConstants
     {
         public const string ImagesPath = "/images/products/";
+        public const string CartKey = "ShoppingProducts";
     }
 }

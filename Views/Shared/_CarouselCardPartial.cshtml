@@ -1,0 +1,11 @@
+﻿@model Exam_ASP_NET.Models.Purchase;
+
+<div class="carousel-item">
+    <a asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@WebConstants.ImagesPath@Model.Image" class="d-block w-100" alt="Image Card">
+        <div class="carousel-caption d-none d-md-block">
+            <h2>@Model.Name</h2>
+            <p>@Model.Link</p>
+        </div>
+    </a>
+</div>

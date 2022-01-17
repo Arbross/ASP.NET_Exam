@@ -1,0 +1,25 @@
+﻿@model Exam_ASP_NET.Models.ViewModels.DetailsVM;
+
+<h1>Details</h1>
+<h2 class="text-center">@Model.Purchase.Name</h2>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <span> @Model.Purchase.Link @Model.Purchase.Category.Name</span>
+    </div>
+    <div class="col-6">
+        <a asp-action="Index" class="btn btn-dark w-100"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+    @if (Model.IsAddedToCart)
+    {
+        <div class="col-6">
+            <a asp-action="RemoveFromCart" asp-route-id="@Model.Purchase.Id" class="btn btn-danger w-100 text-white"><i class="fas fa-cart-plus"></i> Remove from Cart</a>
+        </div>
+    }
+    else
+    {
+        <div class="col-6">
+            <a asp-action="AddToCart" asp-route-id="@Model.Purchase.Id" class="btn btn-success w-100 text-white"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+        </div>
+    }
+</div>

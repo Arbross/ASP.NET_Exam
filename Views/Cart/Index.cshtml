@@ -1,0 +1,13 @@
+﻿@model Exam_ASP_NET.Models.ViewModels.CartVM;
+
+<div class="container">
+    @foreach (Purchase purchase in @Model.Purchases)
+    {
+        <div class="p-2 bg-light mb-1">
+            <img src="@WebConstants.ImagesPath@purchase.Image" alt="Alternate Text" style="width: 400px;"/>
+            <p>Name : @purchase.Name</p>
+            <p>Link : @purchase.Link</p>
+            <p>Purchase : @purchase.Category.Name</p>
+        </div>
+    }
+</div>
