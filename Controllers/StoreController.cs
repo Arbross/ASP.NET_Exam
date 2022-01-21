@@ -1,5 +1,6 @@
 ﻿using Exam_ASP_NET.Models;
 using Exam_ASP_NET.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -108,6 +109,7 @@ namespace Exam_ASP_NET
         }
 
         // GET
+        [Authorize(WebConstants.AdminRole)]
         public IActionResult Upset(int? id)
         {
             ViewModel viewModel = new ViewModel()
@@ -135,6 +137,7 @@ namespace Exam_ASP_NET
 
         // POST
         [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(WebConstants.AdminRole)]
         public IActionResult Upset(ViewModel model)
         {
             if (!ModelState.IsValid) return NotFound();
@@ -183,6 +186,7 @@ namespace Exam_ASP_NET
             return RedirectToAction(nameof(Store));
         }
 
+        [Authorize(WebConstants.AdminRole)]
         public IActionResult Delete(int? id)
         {
             if (id == null || id <= 0) return NotFound();
