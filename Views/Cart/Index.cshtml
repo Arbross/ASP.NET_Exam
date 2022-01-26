@@ -57,9 +57,9 @@
     </table>
     <div class="d-flex justify-content-between">
         <div>
-            @{ 
+            @{
                 int totalPrice = 0;
-            } 
+            }
             @foreach (Purchase purchase in @Model.Purchases)
             {
                 totalPrice += purchase.Id;

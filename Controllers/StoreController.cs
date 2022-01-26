@@ -109,7 +109,7 @@ namespace Exam_ASP_NET
         }
 
         // GET
-        [Authorize(WebConstants.AdminRole)]
+        // [Authorize(WebConstants.AdminRole)]
         public IActionResult Upset(int? id)
         {
             ViewModel viewModel = new ViewModel()
@@ -137,7 +137,7 @@ namespace Exam_ASP_NET
 
         // POST
         [HttpPost, ValidateAntiForgeryToken]
-        [Authorize(WebConstants.AdminRole)]
+        // [Authorize(WebConstants.AdminRole)]
         public IActionResult Upset(ViewModel model)
         {
             if (!ModelState.IsValid) return NotFound();
