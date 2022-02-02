@@ -1,17 +1,15 @@
 using Exam_ASP_NET.Models;
+using Exam_ASP_NET.RazorService;
+using Exam_ASP_NET.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ReplicaData.Repositories;
 
 namespace Exam_ASP_NET
 {
@@ -28,14 +26,16 @@ namespace Exam_ASP_NET
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SomeeConnStr")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnStr")));
 
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<DatabaseContext>();
 
-            services.AddTransient<IEmailSender, Utilities.MailService>();
+            services.AddTransient<IEmailSender, MailService>();
+            services.AddScoped<IViewRender, ViewRender>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddHttpContextAccessor();
             services.AddSession(options => 

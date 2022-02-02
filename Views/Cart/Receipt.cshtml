@@ -1,0 +1,38 @@
+﻿@model Exam_ASP_NET.Models.ReceiptMail;
+@{ 
+    ViewData["Title"] = "Receipt";
+    Layout = "~/Views/Shared/_MailLayout.cshtml";
+}
+
+<div class="container">
+    <div class="p-3 bg-light rounded">
+        <h2>RECEIPT</h2>
+        <div>
+            <p>BILL TO</p>
+            <p>*User*</p>
+            <p>*Address*</p>
+        </div>
+        <ol class="list-group list-group-numbered">
+            @foreach (Purchase item in @Model.Purchases)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">@item.Name</div>
+                        @item.Link
+                    </div>
+                    <span class="badge bg-primary rounded-pill">@item.Id$</span>
+                </li>
+            }
+        </ol>
+        <div class="pt-3">
+                @{
+                    int totalPrice = 0;
+                }
+                @foreach (Purchase purchase in @Model.Purchases)
+                {
+                    totalPrice += purchase.Id;
+                }
+                <h4>Total price : @totalPrice$</h4>
+        </div>
+    </div>
+</div>

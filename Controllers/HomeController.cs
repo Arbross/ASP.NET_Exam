@@ -1,8 +1,9 @@
 ﻿using Exam_ASP_NET.Models;
-using Exam_ASP_NET.Models.ViewModels;
+using Exam_ASP_NET.ViewModels;
 using Exam_ASP_NET.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ReplicaData.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,20 +15,20 @@ namespace Exam_ASP_NET.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DatabaseContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
         public HomeController(DatabaseContext context, ILogger<HomeController> logger)
         {
-            _context = context;
+            _unitOfWork = new UnitOfWork(context);
             _logger = logger;
         }
 
         public IActionResult Details(int id)
         {
-            Purchase purchase = _context.Purchases.Find(id);
+            Purchase purchase = _unitOfWork.PurchaseRepository.GetById(id);
             if (purchase == null) return NotFound();
 
-            _context.Entry(purchase).Reference(nameof(Purchase.Category)).Load();
+            // _context.Entry(purchase).Reference(nameof(Purchase.Category)).Load();
 
             bool isAddedToCart = false;
             List<ShoppingProduct> products = HttpContext.Session.GetObject<List<ShoppingProduct>>(WebConstants.CartKey);
@@ -73,7 +74,7 @@ namespace Exam_ASP_NET.Controllers
         {
             HomeVM viewModel = new HomeVM()
             {
-                Purchases = _context.Purchases.ToList()
+                Purchases = _unitOfWork.PurchaseRepository.Get()
             };
 
             return View(viewModel);
