@@ -4,12 +4,12 @@
     Layout = "~/Views/Shared/_AdminPanel.cshtml";
 }
 
-<div class="container d-flex justify-content-between">
+<div class="container d-flex justify-content-between mt-3">
     <div>
         <h2>Admin Panel</h2>
     </div>
     <div>
-        <a asp-controller="Store" asp-action="Upset" class="btn btn-primary">Create Genre</a>
+        <a asp-controller="AdminPanel" asp-action="Upset" class="btn btn-primary">Create Purchase</a>
     </div>
 </div>
 
@@ -45,9 +45,15 @@
                     <p>Image : @item.Image</p>
                     <p>Link : @item.Link</p>
                     <p>Purchase : @item.Category.Name</p>
+                    <p>Status : @item.Status</p>
                     <div class="d-flex justify-content-between p-1">
-                        <a asp-controller="Store" asp-route-Id="@item.Id" asp-action="Upset" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</a>
-                        <a asp-controller="Store" asp-route-Id="@item.Id" asp-action="Delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <a asp-controller="AdminPanel" asp-route-Id="@item.Id" asp-action="Upset" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</a>
+                        <a asp-controller="AdminPanel" asp-route-Id="@item.Id" asp-action="Delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </div>
+                    <div class="d-flex justify-content-between p-1">
+                        <a asp-controller="AdminPanel" asp-route-id="@item.Id" asp-action="PendingStatus" class="w-25 btn btn-secondary">Pending</a>
+                        <a asp-controller="AdminPanel" asp-route-id="@item.Id" asp-action="ProccessingStatus" class="w-25 btn btn-primary">Proccessing</a>
+                        <a asp-controller="AdminPanel" asp-route-id="@item.Id" asp-action="CompletedStatus" class="w-25 btn btn-success">Completed</a>
                     </div>
                 </div>
             }

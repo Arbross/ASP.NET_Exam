@@ -26,12 +26,21 @@ namespace Exam_ASP_NET
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnStr")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnStr"), b => b.MigrationsAssembly("Exam_ASP_NET")));
 
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<DatabaseContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Admin");
+                    });
+            });
 
             services.AddTransient<IEmailSender, MailService>();
             services.AddScoped<IViewRender, ViewRender>();

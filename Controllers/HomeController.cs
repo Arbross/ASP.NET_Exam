@@ -28,7 +28,7 @@ namespace Exam_ASP_NET.Controllers
             Purchase purchase = _unitOfWork.PurchaseRepository.GetById(id);
             if (purchase == null) return NotFound();
 
-            // _context.Entry(purchase).Reference(nameof(Purchase.Category)).Load();
+            _unitOfWork.Load(purchase);
 
             bool isAddedToCart = false;
             List<ShoppingProduct> products = HttpContext.Session.GetObject<List<ShoppingProduct>>(WebConstants.CartKey);

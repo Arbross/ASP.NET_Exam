@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using Exam_ASP_NET.Models;
+using Exam_ASP_NET.Utilities;
 using Exam_ASP_NET.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +25,7 @@ namespace Exam_ASP_NET.Controllers
             _host = host;
         }
 
+        [Authorize(WebConstants.AdminRole)]
         public IActionResult AdminPanel()
         {
             AdminPanelVM viewModel = new AdminPanelVM()
@@ -80,6 +83,29 @@ namespace Exam_ASP_NET.Controllers
             return View(nameof(AdminPanel), viewModel);
         }
 
+        private IActionResult StatusChanging(int? id, Status status)
+        {
+            if (id == null || id <= 0) return NotFound();
+
+            var obj = _unitOfWork.PurchaseRepository.GetById(id);
+
+            if (obj == null) return NotFound();
+
+            obj.Status = status;
+            _unitOfWork.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AdminPanel));
+        }
+
+        [Authorize(WebConstants.AdminRole)]
+        public IActionResult PendingStatus(int? id) => StatusChanging(id, Status.Pending);
+
+        [Authorize(WebConstants.AdminRole)]
+        public IActionResult ProccessingStatus(int? id) => StatusChanging(id, Status.Proccessing);
+        
+        [Authorize(WebConstants.AdminRole)]
+        public IActionResult CompletedStatus(int? id) => StatusChanging(id, Status.Completed);
+
         private string SaveCarImage(IFormFile img)
         {
             string root = _host.WebRootPath;
@@ -136,6 +162,12 @@ namespace Exam_ASP_NET.Controllers
 
                 _unitOfWork.Add(model.Purchase);
                 _unitOfWork.SaveChangesAsync();
+
+                TempData[WebConstants.AlertData] = JsonSerializer.Serialize(new AlertData()
+                {
+                    Type = "success",
+                    Text = "New purchase was successfuly added!"
+                });
             }
             else
             {
@@ -166,6 +198,12 @@ namespace Exam_ASP_NET.Controllers
 
                 _unitOfWork.Update(model.Purchase);
                 _unitOfWork.SaveChangesAsync();
+
+                TempData[WebConstants.AlertData] = JsonSerializer.Serialize(new AlertData()
+                {
+                    Type = "success",
+                    Text = "Purchase was successfuly edited!"
+                });
             }
 
 
@@ -193,6 +231,12 @@ namespace Exam_ASP_NET.Controllers
 
             _unitOfWork.Remove(remove);
             _unitOfWork.SaveChangesAsync();
+
+            TempData[WebConstants.AlertData] = JsonSerializer.Serialize(new AlertData()
+            {
+                Type = "error",
+                Text = "Purchase was successfuly removed!"
+            });
 
             return RedirectToAction(nameof(AdminPanel));
         }
